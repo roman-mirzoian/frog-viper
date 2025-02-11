@@ -26,26 +26,43 @@ export const SocketContextProvider = ({
 	children: ReactNode;
 }) => {
 	const [socket, setSocket] = useState<typeof Socket | null>(null);
+	const [environment, setEnvironment] = useState<string>("development");
 	const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 
 	useEffect(() => {
-		const socket = io("http://localhost:3000/", {
+		const socketLink =
+			environment === "development"
+				? "http://localhost:3000/"
+				: "https://frog-viper.onrender.com";
+		const socket = io(socketLink, {
 			transports: ["websocket", "polling"],
 			autoConnect: false,
 		});
 
 		setSocket(socket);
-		socket.on("getOnlineUsers", (users: string[]) => {
+		socket?.on("getOnlineUsers", (users: string[]) => {
 			setOnlineUsers(users);
 		});
 
 		return () => {
-			socket.close();
+			socket?.close();
 		};
-	}, []);
+	}, [environment]);
+
+	const handleEnvironmentChange = () => {
+		if (socket) {
+			socket.close();
+		}
+		setEnvironment(prev =>
+			prev === "development" ? "production" : "development",
+		);
+	};
 
 	return (
 		<SocketContext.Provider value={{ socket, onlineUsers }}>
+			<button onClick={handleEnvironmentChange}>
+				Change environment: {environment}
+			</button>
 			{children}
 		</SocketContext.Provider>
 	);
