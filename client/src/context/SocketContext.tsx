@@ -36,7 +36,7 @@ export const SocketContextProvider = ({
 				: "https://frog-viper.onrender.com";
 		const socket = io(socketLink, {
 			transports: ["websocket", "polling"],
-			autoConnect: false,
+			//autoConnect: false,
 		});
 
 		setSocket(socket);
@@ -60,9 +60,9 @@ export const SocketContextProvider = ({
 
 	return (
 		<SocketContext.Provider value={{ socket, onlineUsers }}>
-			<button onClick={handleEnvironmentChange}>
+			{/*<button onClick={handleEnvironmentChange}>
 				Change environment: {environment}
-			</button>
+			</button>*/}
 			{children}
 		</SocketContext.Provider>
 	);
