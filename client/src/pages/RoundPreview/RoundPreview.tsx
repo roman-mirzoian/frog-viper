@@ -6,7 +6,7 @@ export default function RoundPreview() {
 	const round = searchParams.get("round");
 
 	return (
-		<div>
+		<>
 			<div className={styles.previewBackground}></div>
 			<div className="flex flex-col justify-center items-center w-screen h-screen space-y-4">
 				<h1 className={styles.previewTitle}>РАУНД {round}</h1>
@@ -16,6 +16,6 @@ export default function RoundPreview() {
 					<p>Ні те, ні се - облизав жабу</p>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
