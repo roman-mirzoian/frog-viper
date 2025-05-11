@@ -11,7 +11,15 @@ function WaitingList() {
 	};
 
 	return (
-		<div>
+		<div
+			style={{
+				width: "100vw",
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				gap: "1rem",
+			}}
+		>
 			<p>Connected users</p>
 			<ul>
 				{onlineUsers.map((user, index) => (

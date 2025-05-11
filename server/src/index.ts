@@ -3,11 +3,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { app } from "./socket/socket";
 import path from "path";
+import gameRoute from "@/routes/game";
 
 dotenv.config();
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/game', gameRoute);
 
 const currentRootDir = __dirname.split("/").slice(0, -2).join("/");
 const clientBuildDir = path.join(currentRootDir, "/client/dist");

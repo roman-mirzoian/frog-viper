@@ -16,12 +16,18 @@ function ConnectionInput() {
 	const connect = () => {
 		socket?.emit("connectUser", userName);
 		socket?.connect();
-		navigate("/waitinglist");
+
+		if(userName === 'main') {
+			navigate("/main-waiting-page");
+		} else {
+			navigate("/users-waiting-list");
+		}
 	};
 
 	return (
 		<div
 			style={{
+				width: "100vw",
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
@@ -32,7 +38,7 @@ function ConnectionInput() {
 				<h2>Connect to the server</h2>
 				<p>Enter your username</p>
 			</div>
-			<input type="text" onChange={handleUserNameChange} />
+			<input type="text" onChange={handleUserNameChange} style={{ border: "1px solid white" }} />
 			<button onClick={connect}>Connect</button>
 		</div>
 	);

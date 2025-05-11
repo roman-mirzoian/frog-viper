@@ -7,6 +7,7 @@ import {
 	ReactNode,
 } from "react";
 import io, { Socket } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const SocketContext = createContext<{
 	socket: typeof Socket | null;
@@ -28,11 +29,13 @@ export const SocketContextProvider = ({
 	const [socket, setSocket] = useState<typeof Socket | null>(null);
 	const [environment, setEnvironment] = useState<string>("development");
 	const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+	const navigation = useNavigate();
 
 	useEffect(() => {
 		const socketLink =
 			environment === "development"
-				? "http://localhost:3000/"
+				// ? "http://localhost:3000/"
+				? "http://10.0.0.112:3000/"
 				: "https://frog-viper.onrender.com";
 		const socket = io(socketLink, {
 			transports: ["websocket", "polling"],
@@ -41,13 +44,21 @@ export const SocketContextProvider = ({
 
 		setSocket(socket);
 		socket?.on("getOnlineUsers", (users: string[]) => {
-			setOnlineUsers(users);
+			setOnlineUsers(Object.values(users));
 		});
 
 		return () => {
 			socket?.close();
 		};
 	}, [environment]);
+
+	useEffect(() => {
+		socket?.on("nextRound", (roundNumber: number) => {
+			console.log(roundNumber);
+				navigation(`/round-page?id=${roundNumber}`);
+			}
+		)
+	}, [socket, navigation]);
 
 	const handleEnvironmentChange = () => {
 		if (socket) {

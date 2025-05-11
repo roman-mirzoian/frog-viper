@@ -3,10 +3,12 @@ import Logo from "../../assets/logo.jpg";
 import { useSocketContext } from "../../context/SocketContext";
 import { Player } from "../../types";
 import { PlayerList } from "./PlayerList";
+import { useNavigate } from "react-router-dom";
 
 export default function WaitingPage() {
 	const [players, setPlayers] = useState<Player[]>([]);
-	const { onlineUsers } = useSocketContext();
+	const { onlineUsers, socket } = useSocketContext();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setPlayers(
@@ -15,6 +17,16 @@ export default function WaitingPage() {
 			})),
 		);
 	}, [onlineUsers]);
+
+	useEffect(() => {
+		socket?.on('start', () => {
+			navigate('/round-preview');
+		});
+
+		return () => {
+			socket?.off('start');
+		};
+	}, [navigate]);
 
 	return (
 		<div className="w-screen h-screen bg-frog-viper">

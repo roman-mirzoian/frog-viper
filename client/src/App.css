@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+body {
+	width: 100vw;
+	height: 100vh;
+}
+
 @theme {
 	--color-frog-viper: #ff7ab2;
 	--color-primary: #cd8684;

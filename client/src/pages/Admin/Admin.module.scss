@@ -1,0 +1,78 @@
+/* AdminPage.module.scss */
+.page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f3f4f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner {
+  background-color: white;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+
+  button {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #1d4ed8;
+    }
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+
+  color: black;
+
+  th,
+  td {
+    border: 1px solid #d1d5db;
+    padding: 8px 12px;
+  }
+
+  th {
+    background-color: #e5e7eb;
+  }
+}
+
+.restart {
+  background-color: #dc2626;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #b91c1c;
+  }
+}
