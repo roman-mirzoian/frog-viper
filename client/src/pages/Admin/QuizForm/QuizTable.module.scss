@@ -1,0 +1,92 @@
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 1rem;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+}
+
+.selectButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.deleteButton {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: black;
+  }
+}
+
+.section {
+  margin-top: 1rem;
+
+  h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    padding-left: 1.2rem;
+    margin: 0;
+
+    li {
+      margin-bottom: 6px;
+    }
+  }
+}
+
+.mediaGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.image {
+  width: 120px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.video {
+  width: 300px;
+  height: 180px;
+  border: none;
+  border-radius: 6px;
+}

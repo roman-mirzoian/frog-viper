@@ -14,6 +14,13 @@ router.post('/start', (req: Request, res: Response) => {
   res.status(200).json({ success: true });
 });
 
+router.get('/info', (req: Request, res: Response) => {
+  const row = db
+    .prepare('SELECT * FROM game_state')
+    .get() as GameRow;
+  res.status(200).json(row);
+})
+
 router.get('/stop', (req: Request, res: Response) => {
   const row = db
     .prepare('SELECT state FROM game_state ORDER BY updated_at DESC LIMIT 1')

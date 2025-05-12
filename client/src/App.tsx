@@ -6,6 +6,8 @@ import WaitingPage from "./pages/WaitingPage/WaitingPage";
 import RoundPreview from "./pages/RoundPreview/RoundPreview";
 import RoundPage from "./pages/RoundPage/RoundPage";
 import Admin from "./pages/Admin/Admin";
+import QuizForm from "./pages/Admin/QuizForm/QuizForm.tsx";
+import QuizTable from "./pages/Admin/QuizForm/QuizTable.tsx";
 
 function App() {
 	return (
@@ -16,6 +18,8 @@ function App() {
 			<Route path="/round-preview" element={<RoundPreview />} />
 			<Route path="/round-page" element={<RoundPage />} />
 			<Route path="/admin" element={<Admin />} />
+			<Route path="/quiz-table" element={<QuizTable />} />
+			<Route path="/quiz-form" element={<QuizForm />} />
 		</Routes>
 	);
 }
