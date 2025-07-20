@@ -20,7 +20,7 @@ export default function ScoreTable({ players }: ScoreTableProps) {
 				</thead>
 				<tbody>
 				{players?.map(player => {
-					return 		<tr>
+					return <tr key={player}>
 						<td>Player {player}</td>
 						<td>10</td>
 					</tr>

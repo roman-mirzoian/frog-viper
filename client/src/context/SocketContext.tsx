@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+import * as React from "react";
 import {
 	createContext,
 	useContext,
@@ -35,7 +36,7 @@ export const SocketContextProvider = ({
 		const socketLink =
 			environment === "development"
 				// ? "http://localhost:3000/"
-				? "http://10.0.0.112:3000/"
+				? "http://192.168.100.3:3000/"
 				: "https://frog-viper.onrender.com";
 		const socket = io(socketLink, {
 			transports: ["websocket", "polling"],
@@ -60,21 +61,27 @@ export const SocketContextProvider = ({
 		)
 	}, [socket, navigation]);
 
+	return (
+		<SocketContext.Provider value={{ socket, onlineUsers }}>
+			{/*{ socket && <ChangeEnvButton socket={socket} environment={environment} setEnvironment={setEnvironment} /> }*/}
+			{children}
+		</SocketContext.Provider>
+	);
+};
+
+function ChangeEnvButton({ socket, environment, setEnvironment }: { socket: typeof Socket, environment: string, setEnvironment: React.Dispatch<React.SetStateAction<string>> }) {
 	const handleEnvironmentChange = () => {
 		if (socket) {
 			socket.close();
 		}
 		setEnvironment(prev =>
-			prev === "development" ? "production" : "development",
+			prev === "development" ? "production" : "development"
 		);
 	};
 
 	return (
-		<SocketContext.Provider value={{ socket, onlineUsers }}>
-			{/*<button onClick={handleEnvironmentChange}>
-				Change environment: {environment}
-			</button>*/}
-			{children}
-		</SocketContext.Provider>
+		<button onClick={handleEnvironmentChange}>
+			Change environment: {environment}
+		</button>
 	);
-};
+}

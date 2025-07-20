@@ -20,13 +20,13 @@ export default function WaitingPage() {
 
 	useEffect(() => {
 		socket?.on('start', () => {
-			navigate('/round-preview');
+			navigate('/round-preview?round=1');
 		});
 
 		return () => {
 			socket?.off('start');
 		};
-	}, [navigate]);
+	}, [navigate, socket]);
 
 	return (
 		<div className="w-screen h-screen bg-frog-viper">

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useSocketContext } from "../context/SocketContext";
+import { useSocketContext } from "../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
+import styles from "./ConnectionInput.module.scss";
 
 function ConnectionInput() {
 	const [userName, setUserName] = useState<string>("Not set");
@@ -25,20 +26,12 @@ function ConnectionInput() {
 	};
 
 	return (
-		<div
-			style={{
-				width: "100vw",
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				gap: "1rem",
-			}}
-		>
+		<div className={styles.connectionInput}>
 			<div>
 				<h2>Connect to the server</h2>
 				<p>Enter your username</p>
 			</div>
-			<input type="text" onChange={handleUserNameChange} style={{ border: "1px solid white" }} />
+			<input type="text" onChange={handleUserNameChange} />
 			<button onClick={connect}>Connect</button>
 		</div>
 	);

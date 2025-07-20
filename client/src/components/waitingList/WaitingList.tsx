@@ -1,5 +1,6 @@
-import { useSocketContext } from "../context/SocketContext";
+import { useSocketContext } from "../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
+import styles from './WaitingList.module.scss';
 
 function WaitingList() {
 	const { socket, onlineUsers } = useSocketContext();
@@ -11,15 +12,7 @@ function WaitingList() {
 	};
 
 	return (
-		<div
-			style={{
-				width: "100vw",
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				gap: "1rem",
-			}}
-		>
+		<div className={styles.waitingList}>
 			<p>Connected users</p>
 			<ul>
 				{onlineUsers.map((user, index) => (
