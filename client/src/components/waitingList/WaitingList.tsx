@@ -7,7 +7,7 @@ function WaitingList() {
 	const navigate = useNavigate();
 
 	const disconnect = () => {
-		socket?.disconnect();
+		socket?.emit("manualDisconnect", { reason: "user-logout" });
 		navigate("/");
 	};
 

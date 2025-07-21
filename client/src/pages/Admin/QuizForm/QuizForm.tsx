@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./QuizForm.module.scss";
+import { API_LOCAL } from "../../../constants";
 
 type Question = {
 	text: string;
@@ -19,8 +20,6 @@ const quizDataTemplate: QuizData = {
 	imageLinks: Array(3).fill(""),
 	videoLinks: Array(2).fill(""),
 };
-
-const API = 'http://localhost:3000';
 
 const QuizForm: React.FC = () => {
 	const [ blockName, setBlockName ] = useState("");
@@ -49,7 +48,7 @@ const QuizForm: React.FC = () => {
 		e.preventDefault();
 		console.log("Quiz Data:", { ...quizData, blockName });
 		try {
-			await axios.post(`${API}/admin/add-quiz`, { ...quizData, blockName });
+			await axios.post(`${API_LOCAL}/admin/add-quiz`, { ...quizData, blockName });
 			setBlockName('');
 			setQuizData(quizDataTemplate);
 			navigation('/admin');
