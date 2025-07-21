@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
 
   socket.on("connectUser", (userName: string) => {
     if(userName === "main") {
-      mainViewId = deviceId;
+      mainViewId = socket.id;
     } else {
       userNameMap[deviceId] = userName;
     }
@@ -64,6 +64,8 @@ io.on("connection", (socket) => {
     db.prepare(
       `UPDATE game_state SET state = 'not_started', currentRound = 0`
     ).run();
+    console.log('Game ended', data);
+    io.to(getMainViewId()).emit('end', data);
   });
 
   socket.on("manualDisconnect", () => {
