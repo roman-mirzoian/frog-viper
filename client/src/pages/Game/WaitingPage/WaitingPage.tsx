@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Logo from "../../assets/logo.jpg";
-import { useSocketContext } from "../../context/SocketContext";
-import { Player } from "../../types";
-import { PlayerList } from "./PlayerList";
+import Logo from "../../../assets/logo.jpg";
+import { useSocketContext } from "../../../context/SocketContext.tsx";
+import { Player } from "../../../types";
+import { PlayerList } from "./PlayerList.tsx";
 import { useNavigate } from "react-router-dom";
 
 export default function WaitingPage() {

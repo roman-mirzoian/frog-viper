@@ -1,5 +1,5 @@
 import styles from "./RoundPage.module.scss";
-import { useSocketContext } from "../../context/SocketContext.tsx";
+import { useSocketContext } from "../../../context/SocketContext.tsx";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

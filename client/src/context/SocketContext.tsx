@@ -9,6 +9,8 @@ import {
 } from "react";
 import io, { Socket } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
+import { getDeviceId } from "../utils/utils.ts";
+import { API_NETWORK } from "../constants";
 
 const SocketContext = createContext<{
 	socket: typeof Socket | null;
@@ -28,6 +30,8 @@ export const SocketContextProvider = ({
 	children: ReactNode;
 }) => {
 	const [socket, setSocket] = useState<typeof Socket | null>(null);
+	// @ts-expect-error tmp
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [environment, setEnvironment] = useState<string>("development");
 	const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 	const navigation = useNavigate();
@@ -36,9 +40,12 @@ export const SocketContextProvider = ({
 		const socketLink =
 			environment === "development"
 				// ? "http://localhost:3000/"
-				? "http://192.168.100.3:3000/"
+				? API_NETWORK
 				: "https://frog-viper.onrender.com";
 		const socket = io(socketLink, {
+			auth: {
+				deviceId: getDeviceId(),
+			},
 			transports: ["websocket", "polling"],
 			//autoConnect: false,
 		});
@@ -69,6 +76,8 @@ export const SocketContextProvider = ({
 	);
 };
 
+// @ts-expect-error tmp
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ChangeEnvButton({ socket, environment, setEnvironment }: { socket: typeof Socket, environment: string, setEnvironment: React.Dispatch<React.SetStateAction<string>> }) {
 	const handleEnvironmentChange = () => {
 		if (socket) {

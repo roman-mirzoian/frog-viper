@@ -1,12 +1,11 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import axios from "axios";
+import { API_LOCAL } from "../constants";
 
 interface QuizContextType {
 	currentQuestionBlock: { [key: string]: string };
 	gameInfo: { [key: string]: string };
 }
-
-const API = 'http://localhost:3000';
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
@@ -19,9 +18,9 @@ export const QuizProvider = ({ children }: {
 	useEffect(() => {
 		const fetchCurrentBlock = async () => {
 			try {
-				const gameInfo = await axios.get(`${API}/game/info`);
+				const gameInfo = await axios.get(`${API_LOCAL}/game/info`);
 				setGameInfo(gameInfo.data);
-				const response = await axios.get(`${API}/admin/get-quiz/${gameInfo.data.currentQuestionBlock}`);
+				const response = await axios.get(`${API_LOCAL}/admin/get-quiz/${gameInfo.data.currentQuestionBlock}`);
 				setCurrentQuestionBlock(response.data);
 			} catch (error) {
 				console.error('Error fetching current block:', error);

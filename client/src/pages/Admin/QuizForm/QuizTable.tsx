@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from './QuizTable.module.scss';
+import { API_LOCAL } from "../../../constants";
 
 export interface Quiz {
 	id: number;
@@ -11,28 +12,26 @@ export interface Quiz {
 	videoLinks: string;
 }
 
-const API = 'http://localhost:3000';
-
 const QuizTable = () => {
-	const [quizesToSelect, setquizesToSelect] = useState<Quiz[]>([]);
+	const [quizesToSelect, setQuizesToSelect] = useState<Quiz[]>([]);
 	const navigation = useNavigate();
 
 	useEffect(() => {
 		async function getQuizes() {
-			const quizes = await axios.get(`${API}/admin/quizes`);
+			const quizes = await axios.get(`${API_LOCAL}/admin/quizes`);
 			return quizes.data;
 		}
-		getQuizes().then(setquizesToSelect);
+		getQuizes().then(setQuizesToSelect);
 	}, []);
 
 	const handleQuizSelect = async (quizId: number) => {
-		await axios.post(`${API}/admin/select-quiz`, { quizId });
+		await axios.post(`${API_LOCAL}/admin/select-quiz`, { quizId });
 		navigation('/admin');
 	}
 
 	const handleQuizDelete = async (quizId: number) => {
-		await axios.post(`${API}/admin/delete-quiz`, { quizId });
-		setquizesToSelect((currentQuizes) => currentQuizes.filter(quiz => quiz.id !== quizId));
+		await axios.post(`${API_LOCAL}/admin/delete-quiz`, { quizId });
+		setQuizesToSelect((currentQuizes) => currentQuizes.filter(quiz => quiz.id !== quizId));
 	}
 
 	return (

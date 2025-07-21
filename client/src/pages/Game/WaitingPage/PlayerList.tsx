@@ -1,5 +1,5 @@
-import PlayerAvatar from "../../components/PlayerAvatar";
-import { Player } from "../../types";
+import PlayerAvatar from "../../../components/PlayerAvatar.tsx";
+import { Player } from "../../../types";
 
 export function PlayerList({
 	players,
