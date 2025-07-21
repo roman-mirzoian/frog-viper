@@ -1,6 +1,8 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import express from "express";
 import http from "http";
+import { getLocalIPAddress } from "@/helpers";
+import db from "@/db";
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,8 +20,10 @@ const userNameMap: { [key: string]: string } = {};
 let mainViewId = '';
 
 io.on("connection", (socket) => {
+  const deviceId = getDeviceId(socket);
+
   console.log("--------------------");
-  console.log("a user connected: ", socket.id);
+  console.log("a user connected: ", deviceId);
   console.log("--------------------");
 
   io.emit("getOnlineUsers", Object.values(userNameMap));
@@ -27,19 +31,22 @@ io.on("connection", (socket) => {
 
   socket.on("connectUser", (userName: string) => {
     if(userName === "main") {
-      mainViewId = socket.id;
+      mainViewId = deviceId;
     } else {
-      userNameMap[socket.id] = userName;
+      userNameMap[deviceId] = userName;
     }
 
-    console.log(userNameMap);
+    console.log("userNameMap", userNameMap);
     io.emit("getOnlineUsers", userNameMap);
   });
 
   socket.on('start', (data) => {
     const players = getOnlinePlayersId();
     console.log('Game started', players);
-    console.log(getMainViewId());
+    console.log('MainViewId', getMainViewId());
+    db.prepare(
+      `UPDATE game_state SET state = 'started', currentRound = 0`
+    ).run();
     io.to(getMainViewId()).emit('start', getOnlinePlayersName());
   });
 
@@ -53,19 +60,26 @@ io.on("connection", (socket) => {
     io.to(getMainViewId()).emit('showResult', data);
   })
 
-  socket.on('end', (data) => {});
+  socket.on('end', (data) => {
+    db.prepare(
+      `UPDATE game_state SET state = 'not_started', currentRound = 0`
+    ).run();
+  });
 
-  socket.on("disconnect", () => {
-    console.log("--------------------");
-    console.log("a user disconnected: ", socket.id);
-    console.log("--------------------");
-    delete userNameMap[socket.id];
+  socket.on("manualDisconnect", () => {
+    delete userNameMap[deviceId];
     io.emit("getOnlineUsers", Object.values(userNameMap));
+    socket.disconnect(true);
+
+    console.log("--------------------");
+    console.log("a user disconnected: ", deviceId);
+    console.log("--------------------");
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}...`);
+  const ip = getLocalIPAddress();
+  console.log(`Server running on: ${ip}:${PORT}...`);
 });
 
 export { io, app };
@@ -80,4 +94,8 @@ function getOnlinePlayersName() {
 
 function getMainViewId() {
   return mainViewId;
+}
+
+function getDeviceId(socket: Socket) {
+  return socket.handshake.auth.deviceId;
 }

@@ -31,4 +31,10 @@ db.prepare(`
     )
 `).run();
 
+db.prepare(`
+  UPDATE game_state
+  SET state = 'not_started'
+  WHERE id = 1
+`).run();
+
 export default db;
