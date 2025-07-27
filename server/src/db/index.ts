@@ -6,6 +6,7 @@ export interface GameRow {
 
 const db = new Database('app.db');
 
+// GAME STATE
 db.prepare(`
   CREATE TABLE IF NOT EXISTS game_state (
     id INTEGER PRIMARY KEY,
@@ -22,6 +23,13 @@ db.prepare(`
 `).run();
 
 db.prepare(`
+  UPDATE game_state
+  SET state = 'not_started'
+  WHERE id = 1
+`).run();
+
+// QUIZES
+db.prepare(`
     CREATE TABLE IF NOT EXISTS quizes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       blockName TEXT NOT NULL,
@@ -31,10 +39,15 @@ db.prepare(`
     )
 `).run();
 
+// USERS
 db.prepare(`
-  UPDATE game_state
-  SET state = 'not_started'
-  WHERE id = 1
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    deviceId TEXT NOT NULL,
+    name TEXT,
+    score INTEGER,
+    roundAnswer INTEGER
+  )
 `).run();
 
 export default db;

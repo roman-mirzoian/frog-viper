@@ -15,3 +15,8 @@ export function getLocalIPAddress() {
         }
     }
 }
+
+export function logInfo(message: string, info: any) {
+    console.log(`[${new Date().toISOString()}] ${message}: ${JSON.stringify(info)}`);
+    console.log("--------------------");
+}

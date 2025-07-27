@@ -1,8 +1,17 @@
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import express from "express";
 import http from "http";
-import { getLocalIPAddress } from "@/helpers";
-import db from "@/db";
+import { getLocalIPAddress, logInfo } from "@/helpers";
+import { getDeviceId } from "@/socket/helpers";
+import {
+  emitConnectedUsers,
+  endGame,
+  insertUserNameWithDeviceId,
+  manualDisconnect,
+  nextRound, showPlayerInput,
+  showResult,
+  startGame,
+} from "@/socket/commands";
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,88 +25,57 @@ const io = new Server(server, {
   },
 });
 
-const userNameMap: { [key: string]: string } = {};
+const userNameMap: Record<string, string> = {};
 let mainViewId = '';
 
 io.on("connection", (socket) => {
   const deviceId = getDeviceId(socket);
 
-  console.log("--------------------");
-  console.log("a user connected: ", deviceId);
-  console.log("--------------------");
+  logInfo('a user connected', deviceId);
 
   io.emit("getOnlineUsers", Object.values(userNameMap));
-  console.log(userNameMap);
 
   socket.on("connectUser", (userName: string) => {
     if(userName === "main") {
       mainViewId = socket.id;
+      logInfo('main view connected', mainViewId)
     } else {
       userNameMap[deviceId] = userName;
+      insertUserNameWithDeviceId(deviceId, userName);
     }
 
-    console.log("userNameMap", userNameMap);
-    io.emit("getOnlineUsers", userNameMap);
+    emitConnectedUsers(userNameMap);
   });
 
-  socket.on('start', (data) => {
-    const players = getOnlinePlayersId();
-    console.log('Game started', players);
-    console.log('MainViewId', getMainViewId());
-    db.prepare(
-      `UPDATE game_state SET state = 'started', currentRound = 0`
-    ).run();
-    io.to(getMainViewId()).emit('start', getOnlinePlayersName());
+  socket.on('start', () => {
+    startGame(userNameMap, mainViewId);
   });
 
   socket.on('nextRound', (data) => {
-    console.log('Next round:', data);
-    io.to(getMainViewId()).emit('nextRound', data);
+    nextRound(data, mainViewId);
   });
 
+  socket.on('showPlayerInput', () => {
+    showPlayerInput();
+  })
+
   socket.on('showResult', (data) => {
-    console.log('Show result', data);
-    io.to(getMainViewId()).emit('showResult', data);
+    showResult(data, mainViewId);
   })
 
   socket.on('end', (data) => {
-    db.prepare(
-      `UPDATE game_state SET state = 'not_started', currentRound = 0`
-    ).run();
-    console.log('Game ended', data);
-    io.to(getMainViewId()).emit('end', data);
+    endGame(data, mainViewId);
   });
 
   socket.on("manualDisconnect", () => {
-    delete userNameMap[deviceId];
-    io.emit("getOnlineUsers", Object.values(userNameMap));
-    socket.disconnect(true);
-
-    console.log("--------------------");
-    console.log("a user disconnected: ", deviceId);
-    console.log("--------------------");
+    manualDisconnect(socket, deviceId, userNameMap);
   });
 });
 
 server.listen(PORT, () => {
   const ip = getLocalIPAddress();
-  console.log(`Server running on: ${ip}:${PORT}...`);
+  logInfo(`Server running on: ${ip}:${PORT}...`, {});
 });
 
 export { io, app };
 
-function getOnlinePlayersId() {
-  return Object.keys(userNameMap).join(", ");
-}
-
-function getOnlinePlayersName() {
-  return Object.values(userNameMap);
-}
-
-function getMainViewId() {
-  return mainViewId;
-}
-
-function getDeviceId(socket: Socket) {
-  return socket.handshake.auth.deviceId;
-}
