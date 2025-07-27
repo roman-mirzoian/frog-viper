@@ -13,7 +13,6 @@ import { API_LOCAL } from "../../constants";
 export default function AdminPage() {
 	const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 	const [ , setCurrentRound] = useState<number>(0);
-	const { onlineUsers } = useSocketContext();
 	const navigate = useNavigate();
 	const { socket } = useSocketContext();
 
@@ -38,6 +37,10 @@ export default function AdminPage() {
 		socket?.emit('showPlayerInput');
 	}
 
+	const handleShowPlayerVote = () => {
+		socket?.emit('showPlayerVote');
+	}
+
 	return (
 		<div className={styles.page}>
 			<div className={styles.inner}>
@@ -50,9 +53,10 @@ export default function AdminPage() {
 
 				<div className={styles.buttons}>
 					<Button onClick={handleShowPlayerInput}>Показати ввод для гравців</Button>
+					<Button onClick={handleShowPlayerVote}>Показати голосування для гравців</Button>
 				</div>
 
-				<ScoreTable players={onlineUsers} />
+				<ScoreTable />
 
 				<div className={styles.buttons}>
 					<Button onClick={() => navigate('/quiz-table')}>Обрати блок питаннь</Button>

@@ -1,13 +1,21 @@
 import { useQuizContext } from "../../context/QuizContext.tsx";
 import styles from "./Admin.module.scss";
+import { useEffect, useState } from "react";
+import { useSocketContext } from "../../context/SocketContext.tsx";
+import { Player } from "../../types";
 
-interface ScoreTableProps {
-	players: string[]
-}
-
-export default function ScoreTable({ players }: ScoreTableProps) {
+export default function ScoreTable() {
 	const { currentQuestionBlock } = useQuizContext();
+	const { socket } = useSocketContext();
+	const [playersState, setPlayersState] = useState<Player[]>([]);
 
+	useEffect(() => {
+		socket?.on('currentPlayersState', (playersState: Player[]) => {
+			setPlayersState(playersState);
+		});
+	}, [socket]);
+
+	console.log({playersState});
 	return (
 		<>
 			<h2>Поточний блок: {currentQuestionBlock.blockName}</h2>
@@ -16,17 +24,24 @@ export default function ScoreTable({ players }: ScoreTableProps) {
 				<tr>
 					<th>Гравець</th>
 					<th>Бали</th>
+					<th>Поточна відповідь</th>
 				</tr>
 				</thead>
 				<tbody>
-				{players?.map(player => {
-					return <tr key={player}>
-						<td>Player {player}</td>
-						<td>10</td>
+				{playersState?.length === 0 && <EmptyRow />}
+				{playersState?.map(player => {
+					return <tr key={player.deviceId}>
+						<td>{player.name}</td>
+						<td>{player.score}</td>
+						<td>{player.roundAnswer}</td>
 					</tr>
 				})}
 				</tbody>
 			</table>
 		</>
 	)
+}
+
+function EmptyRow() {
+	return <tr><td>-</td><td>-</td><td>-</td></tr>;
 }

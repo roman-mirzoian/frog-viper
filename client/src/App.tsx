@@ -10,6 +10,7 @@ import QuizForm from "./pages/Admin/QuizForm/QuizForm.tsx";
 import QuizTable from "./pages/Admin/QuizForm/QuizTable.tsx";
 import RoundInput from "./pages/Player/RoundInput/RoundInput.tsx";
 import RoundWaiting from "./pages/Player/RoundWaiting/RoundWaiting.tsx";
+import PlayerOptions from "./pages/Player/PlayerOptions/PlayerOptions.tsx";
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
 			{/* player */}
 			<Route path="/round-input" element={<RoundInput />} />
 			<Route path="/round-waiting" element={<RoundWaiting />} />
+			<Route path="/player-options" element={<PlayerOptions />} />
 		</Routes>
 	);
 }

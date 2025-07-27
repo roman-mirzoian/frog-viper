@@ -11,6 +11,9 @@ const WaitingMessage: React.FC = () => {
 		socket?.on('showPlayerInput', () => {
 			navigate('/round-input');
 		});
+		socket?.on('showPlayerVote', () => {
+			navigate('/player-options');
+		});
 	}, [navigate, socket]);
 
 	return (
