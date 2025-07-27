@@ -5,8 +5,16 @@ import { getMainViewId, getOnlinePlayersId, getOnlinePlayersName } from "@/socke
 import { logInfo } from "@/helpers";
 
 export function insertUserNameWithDeviceId(deviceId: string, userName: string) {
-  db.prepare('INSERT INTO users (deviceId, name) VALUES (?, ?)').run(deviceId, userName);
+  db.prepare(`
+      INSERT INTO users (deviceId, name, score, roundAnswer)
+      VALUES (?, ?, ?, ?)
+          ON CONFLICT(deviceId) DO UPDATE SET
+          name = excluded.name, 
+          score = excluded.score,
+          roundAnswer = excluded.roundAnswer
+  `).run(deviceId, userName, 0, '');
 }
+
 
 export function emitConnectedUsers(userNameMap: Record<string, string>) {
   logInfo('Connected users', userNameMap);
@@ -34,9 +42,18 @@ export function showPlayerInput() {
   io.emit('showPlayerInput');
 }
 
+export function showPlayerVote() {
+  io.emit('showPlayerVote');
+}
+
 export function showResult(data: any, mainViewId: string) {
   logInfo('Show result', data);
   io.to(getMainViewId(mainViewId)).emit('showResult', data);
+}
+
+export function getCurrentUsersState() {
+  const usersState = db.prepare(`SELECT * FROM users`).all();
+  io.emit('currentPlayersState', usersState);
 }
 
 export function endGame(data: any, mainViewId: string) {

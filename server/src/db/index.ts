@@ -43,7 +43,7 @@ db.prepare(`
 db.prepare(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
-    deviceId TEXT NOT NULL,
+    deviceId TEXT NOT NULL UNIQUE,
     name TEXT,
     score INTEGER,
     roundAnswer INTEGER

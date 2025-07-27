@@ -6,9 +6,12 @@ import { getDeviceId } from "@/socket/helpers";
 import {
   emitConnectedUsers,
   endGame,
+  getCurrentUsersState,
   insertUserNameWithDeviceId,
   manualDisconnect,
-  nextRound, showPlayerInput,
+  nextRound,
+  showPlayerInput,
+  showPlayerVote,
   showResult,
   startGame,
 } from "@/socket/commands";
@@ -45,6 +48,7 @@ io.on("connection", (socket) => {
     }
 
     emitConnectedUsers(userNameMap);
+    getCurrentUsersState();
   });
 
   socket.on('start', () => {
@@ -57,11 +61,19 @@ io.on("connection", (socket) => {
 
   socket.on('showPlayerInput', () => {
     showPlayerInput();
-  })
+  });
+
+  socket.on('showPlayerVote', () => {
+    showPlayerVote();
+  });
 
   socket.on('showResult', (data) => {
     showResult(data, mainViewId);
-  })
+  });
+
+  socket.on('currentPlayersState', () => {
+    getCurrentUsersState();
+  });
 
   socket.on('end', (data) => {
     endGame(data, mainViewId);
