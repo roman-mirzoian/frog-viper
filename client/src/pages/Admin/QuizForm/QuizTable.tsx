@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from './QuizTable.module.scss';
 import { API_LOCAL } from "../../../constants";
+import YouTubePlayer from "../../../components/youTubePlayer/YouTubePlayer.tsx";
+import { ImageFromProxy } from "../../../components/imageFromProxy/ImageFromProxy.tsx";
 
 export interface Quiz {
 	id: number;
@@ -65,7 +67,7 @@ const QuizTable = () => {
 						<h4>Зображення:</h4>
 						<div className={styles.mediaGrid}>
 							{getArrayFromString(quiz.imageLinks).map((img: string, idx: number) => (
-								<img key={idx} src={img} alt={`quiz-img-${idx}`} className={styles.image} />
+								<ImageFromProxy key={idx} url={img} />
 							))}
 						</div>
 					</div>
@@ -74,13 +76,7 @@ const QuizTable = () => {
 						<h4>Відео:</h4>
 						<div className={styles.mediaGrid}>
 							{getArrayFromString(quiz.videoLinks).map((link: string, idx: number) => (
-								<iframe
-									key={idx}
-									src={link}
-									title={`video-${idx}`}
-									className={styles.video}
-									allowFullScreen
-								></iframe>
+								<YouTubePlayer key={idx} url={link} />
 							))}
 						</div>
 					</div>
