@@ -12,7 +12,8 @@ export default function WaitingPage() {
 
 	useEffect(() => {
 		setPlayers(
-			onlineUsers?.map((user: string) => ({
+			// @ts-expect-error tmp
+			onlineUsers?.map((user) => ({
 				name: user,
 			})),
 		);

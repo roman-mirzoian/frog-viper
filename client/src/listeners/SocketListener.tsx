@@ -20,12 +20,18 @@ export default function SocketListener() {
 			navigate(`/round-page?id=${updatedRound}`);
 		}
 
+		const handleFinalPage = () => {
+			navigate("/final-page");
+		}
+
 		socket.on("showResult", handleShowResult);
 		socket.on("nextRound", handleNextRound);
+		socket.on("end", handleFinalPage);
 
 		return () => {
 			socket.off("showResult", handleShowResult);
 			socket.off("nextRound", handleNextRound);
+			socket.off("end", handleFinalPage);
 		};
 	}, [socket, navigate, gameInfo]);
 

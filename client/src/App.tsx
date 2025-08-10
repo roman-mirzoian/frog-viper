@@ -12,6 +12,7 @@ import RoundInput from "./pages/Player/RoundInput/RoundInput.tsx";
 import RoundWaiting from "./pages/Player/RoundWaiting/RoundWaiting.tsx";
 import PlayerOptions from "./pages/Player/PlayerOptions/PlayerOptions.tsx";
 import ResultsPage from "./pages/Game/ResultsPage/ResultsPage.tsx";
+import FinalPage from "./pages/FinalPage/FinalPage.tsx";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 			<Route path="/round-preview" element={<RoundPreview />} />
 			<Route path="/round-page" element={<RoundPage />} />
 			<Route path="/results" element={<ResultsPage />} />
+			<Route path="/final-page" element={<FinalPage />} />
 
 			{/* admin */}
 			<Route path="/admin" element={<Admin />} />

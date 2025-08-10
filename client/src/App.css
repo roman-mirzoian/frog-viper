@@ -5,6 +5,10 @@ body {
 	min-height: 100vh;
 }
 
+#root {
+	width: 100%;
+}
+
 @theme {
 	--color-frog-viper: #ff7ab2;
 	--color-primary: #cd8684;
