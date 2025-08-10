@@ -7,6 +7,7 @@ export const PLAYER_ICON_LINKS = [
 ];
 
 // export const API_NETWORK = "http://192.168.11.111:8080"; // combinaty
-export const API_NETWORK = "http://192.168.100.5:3000"; // home
+// export const API_NETWORK = "http://192.168.100.5:3000"; // home 1
+export const API_NETWORK = "http://192.168.100.3:3000"; // home 2
 // export const API_LOCAL = "http://localhost:3000";
 export const API_LOCAL = API_NETWORK; // мда :)
