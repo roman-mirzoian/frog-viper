@@ -11,14 +11,14 @@ export default function SocketListener() {
 	useEffect(() => {
 		if (!socket) return;
 
-		const handleShowResult = () => {
-			navigate("/results");
-		};
-
 		const handleNextRound = (updatedRound: number) => {
 			refreshData();
 			navigate(`/round-page?id=${updatedRound}`);
 		}
+
+		const handleShowResult = () => {
+			navigate("/results");
+		};
 
 		const handleFinalPage = () => {
 			navigate("/final-page");
@@ -27,14 +27,14 @@ export default function SocketListener() {
 		socket.on('start', () => {
 			navigate('/round-preview?round=1');
 		});
-		socket.on("showResult", handleShowResult);
 		socket.on("nextRound", handleNextRound);
+		socket.on("showResult", handleShowResult);
 		socket.on("end", handleFinalPage);
 
 		return () => {
 			socket.off('start');
-			socket.off("showResult", handleShowResult);
 			socket.off("nextRound", handleNextRound);
+			socket.off("showResult", handleShowResult);
 			socket.off("end", handleFinalPage);
 		};
 	}, [socket, navigate, gameInfo]);

@@ -10,7 +10,7 @@ export default function RoundPage() {
 
 	useEffect(() => {
 		if(currentQuestionBlock && gameInfo) {
-			const currentQuestion = getCurrentQuestion(currentQuestionBlock, +gameInfo.currentRound);
+			const currentQuestion = getCurrentQuestion(currentQuestionBlock, +gameInfo.currentRound - 1);
 			setCurrentQuestion(currentQuestion);
 		}
 	}, [gameInfo, currentQuestionBlock]);
@@ -22,10 +22,10 @@ export default function RoundPage() {
 			<div className={styles.roundBackground}></div>
 			<div className={styles.roundDescription}>
 				{currentQuestion?.text && <p>{currentQuestion.text}</p>}
-				{+gameInfo.currentRound > 4 && +gameInfo.currentRound < 8 && currentQuestion && (
+				{+gameInfo.currentRound - 1 > 4 && +gameInfo.currentRound - 1 < 8 && currentQuestion && (
 					<img src={`${API_LOCAL}/game/image?url=${encodeURIComponent(currentQuestion)}`} alt="currentQuestion" />
 				)}
-				{+gameInfo.currentRound > 7 && currentQuestion && (
+				{+gameInfo.currentRound - 1 > 7 && currentQuestion && (
 					<YouTubePlayer url={currentQuestionMemo} />
 				)}
 				{!currentQuestion && <div style={{color: "white"}}>Питання вже все</div>}
