@@ -75,6 +75,13 @@ router.post('/delete-quiz', (req: Request, res: Response) => {
   const stmt = db.prepare('DELETE FROM quizes WHERE id = ?');
   stmt.run(quizId);
   res.status(200).json({ message: 'Quiz deleted successfully.' });
+});
+
+router.get('/users', (req: Request, res: Response) => {
+  const users = db
+    .prepare('SELECT * FROM users ORDER BY id DESC')
+    .all();
+  res.status(200).json(users);
 })
 
 export default router;
