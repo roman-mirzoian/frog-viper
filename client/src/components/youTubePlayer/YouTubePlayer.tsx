@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from "react";
 import styles from './YouTubePlayer.module.scss';
 
 interface YouTubePlayerProps {
@@ -54,7 +54,7 @@ export function extractYouTubeId(link: string): string | null {
 	return null;
 }
 
-const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
+const YouTubePlayer: React.FC<YouTubePlayerProps> = memo(({
 																											 url,
 																											 width = 560,
 																											 height = 315,
@@ -93,6 +93,6 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 			/>
 		</div>
 	);
-};
+});
 
 export default YouTubePlayer;

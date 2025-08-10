@@ -8,7 +8,6 @@ import {
 	ReactNode,
 } from "react";
 import io, { Socket } from "socket.io-client";
-import { useNavigate } from "react-router-dom";
 import { getDeviceId } from "../utils/utils.ts";
 import { API_NETWORK } from "../constants";
 
@@ -34,7 +33,6 @@ export const SocketContextProvider = ({
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [environment, setEnvironment] = useState<string>("development");
 	const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
-	const navigation = useNavigate();
 
 	useEffect(() => {
 		const socketLink =
@@ -59,14 +57,6 @@ export const SocketContextProvider = ({
 			socket?.close();
 		};
 	}, [environment]);
-
-	useEffect(() => {
-		socket?.on("nextRound", (roundNumber: number) => {
-			console.log(roundNumber);
-				navigation(`/round-page?id=${roundNumber}`);
-			}
-		)
-	}, [socket, navigation]);
 
 	return (
 		<SocketContext.Provider value={{ socket, onlineUsers }}>

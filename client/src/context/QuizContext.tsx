@@ -1,10 +1,11 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useMemo } from "react";
 import axios from "axios";
 import { API_LOCAL } from "../constants";
 
 interface QuizContextType {
 	currentQuestionBlock: { [key: string]: string };
 	gameInfo: { [key: string]: string };
+	refreshData: () => void;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -12,26 +13,29 @@ const QuizContext = createContext<QuizContextType | undefined>(undefined);
 export const QuizProvider = ({ children }: {
 	children: ReactNode;
 }) => {
-	const [gameInfo, setGameInfo] = useState<{[key: string]: string}>({});
-	const [currentQuestionBlock, setCurrentQuestionBlock] = useState<{ [key: string]: string }>({});
+	const [gameInfoRaw, setGameInfoRaw] = useState<{[key: string]: string}>({});
+	const [currentQuestionBlockRaw, setCurrentQuestionBlockRaw] = useState<{ [key: string]: string }>({});
+
+	const fetchCurrentBlock = async () => {
+		try {
+			const gameInfo = await axios.get(`${API_LOCAL}/game/info`);
+			setGameInfoRaw(gameInfo.data);
+			const response = await axios.get(`${API_LOCAL}/admin/get-quiz/${gameInfo.data.currentQuestionBlock}`);
+			setCurrentQuestionBlockRaw(response.data);
+		} catch (error) {
+			console.error('Error fetching current block:', error);
+		}
+	};
 
 	useEffect(() => {
-		const fetchCurrentBlock = async () => {
-			try {
-				const gameInfo = await axios.get(`${API_LOCAL}/game/info`);
-				setGameInfo(gameInfo.data);
-				const response = await axios.get(`${API_LOCAL}/admin/get-quiz/${gameInfo.data.currentQuestionBlock}`);
-				setCurrentQuestionBlock(response.data);
-			} catch (error) {
-				console.error('Error fetching current block:', error);
-			}
-		};
-
 		fetchCurrentBlock();
 	}, []);
 
+	const gameInfo = useMemo(() => gameInfoRaw, [JSON.stringify(gameInfoRaw)]);
+	const currentQuestionBlock = useMemo(() => currentQuestionBlockRaw, [JSON.stringify(currentQuestionBlockRaw)]);
+
 	return (
-		<QuizContext.Provider value={{ currentQuestionBlock, gameInfo }}>
+		<QuizContext.Provider value={{ currentQuestionBlock, gameInfo, refreshData: fetchCurrentBlock }}>
 			{children}
 		</QuizContext.Provider>
 	);

@@ -12,7 +12,6 @@ import { API_LOCAL } from "../../constants";
 
 export default function AdminPage() {
 	const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
-	const [currentRound, setCurrentRound] = useState<number>(0);
 	const navigate = useNavigate();
 	const { socket } = useSocketContext();
 
@@ -25,7 +24,6 @@ export default function AdminPage() {
 
 		getGameInfo().then(info => {
 			setIsGameStarted(info?.state === 'started');
-			setCurrentRound(info?.currentRound);
 		});
 	}, [isGameStarted]);
 
@@ -47,7 +45,7 @@ export default function AdminPage() {
 			<div className={styles.inner}>
 				<div className={styles.buttons}>
 					<StartButton isGameStarted={isGameStarted} setIsGameStarted={setIsGameStarted} />
-					<NextRoundButton isGameStarted={isGameStarted} currentRound={currentRound} setCurrentRound={setCurrentRound} />
+					<NextRoundButton isGameStarted={isGameStarted} />
 					<ResultsButton isGameStarted={isGameStarted} />
 					<Button onClick={handleStopGame} disabled={!isGameStarted}>Фінальний екран</Button>
 				</div>

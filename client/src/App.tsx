@@ -11,6 +11,7 @@ import QuizTable from "./pages/Admin/QuizForm/QuizTable.tsx";
 import RoundInput from "./pages/Player/RoundInput/RoundInput.tsx";
 import RoundWaiting from "./pages/Player/RoundWaiting/RoundWaiting.tsx";
 import PlayerOptions from "./pages/Player/PlayerOptions/PlayerOptions.tsx";
+import ResultsPage from "./pages/Game/ResultsPage/ResultsPage.tsx";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 
 			<Route path="/round-preview" element={<RoundPreview />} />
 			<Route path="/round-page" element={<RoundPage />} />
+			<Route path="/results" element={<ResultsPage />} />
 
 			{/* admin */}
 			<Route path="/admin" element={<Admin />} />
