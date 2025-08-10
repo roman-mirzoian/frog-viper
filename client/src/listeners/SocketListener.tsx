@@ -24,11 +24,15 @@ export default function SocketListener() {
 			navigate("/final-page");
 		}
 
+		socket.on('start', () => {
+			navigate('/round-preview?round=1');
+		});
 		socket.on("showResult", handleShowResult);
 		socket.on("nextRound", handleNextRound);
 		socket.on("end", handleFinalPage);
 
 		return () => {
+			socket.off('start');
 			socket.off("showResult", handleShowResult);
 			socket.off("nextRound", handleNextRound);
 			socket.off("end", handleFinalPage);
