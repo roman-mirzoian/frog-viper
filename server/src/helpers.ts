@@ -20,3 +20,17 @@ export function logInfo(message: string, info: any) {
     console.log(`[${new Date().toISOString()}] ${message}: ${JSON.stringify(info)}`);
     console.log("--------------------");
 }
+
+
+export function extractDriveFileId(url: string): string | null {
+    if (!url) return null;
+
+    // Пошук ID у різних форматах посилань Google Drive
+    let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) return match[1];
+
+    match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (match) return match[1];
+
+    return null;
+}

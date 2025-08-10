@@ -35,6 +35,9 @@ export function startGame(userNameMap: Record<string, string>, mainViewId: strin
 
 export function nextRound(data: any, mainViewId: string) {
   logInfo('Next round', data);
+  db.prepare(
+    `UPDATE game_state SET currentRound = ?`
+  ).run(data);
   io.to(getMainViewId(mainViewId)).emit('nextRound', data);
 }
 

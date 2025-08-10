@@ -1,5 +1,7 @@
 import { Router, Request, Response } from 'express';
 import db, { GameRow } from "../db";
+import { extractDriveFileId } from "@/helpers";
+import axios from "axios";
 
 const router = Router();
 
@@ -31,6 +33,33 @@ router.get('/stop', (req: Request, res: Response) => {
   }
 
   res.status(200).json(JSON.parse(row.state));
+});
+
+router.get("/image", async (req: Request, res: Response) => {
+  const url = req.query.url as string;
+
+  if (!url) {
+    return res.status(400).send("Missing url parameter");
+  }
+
+  const fileId = extractDriveFileId(url);
+  if (!fileId) {
+    return res.status(400).send("Invalid Google Drive URL");
+  }
+
+  try {
+    const response = await axios.get(
+      `https://drive.google.com/uc?export=view&id=${fileId}`,
+      { responseType: "arraybuffer" }
+    );
+
+    const contentType = response.headers["content-type"] || "image/jpeg";
+    res.setHeader("Content-Type", contentType);
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error fetching image from Google Drive:", error);
+    res.status(500).send("Failed to fetch image");
+  }
 });
 
 export default router;
