@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSocketContext } from "../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
 import styles from "./ConnectionInput.module.scss";
+import { clearMainStatus, setDeviceAsMain } from "../../utils/utils.ts";
 
 function ConnectionInput() {
 	const [userName, setUserName] = useState<string>("Not set");
@@ -20,8 +21,10 @@ function ConnectionInput() {
 
 		if(userName === 'main') {
 			navigate("/main-waiting-page");
+			setDeviceAsMain();
 		} else {
 			navigate("/users-waiting-list");
+			clearMainStatus();
 		}
 	};
 

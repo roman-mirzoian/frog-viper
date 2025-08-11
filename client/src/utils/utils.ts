@@ -13,3 +13,19 @@ export function getDeviceId() {
 	return id;
 }
 
+export function setDeviceAsMain() {
+	if (!isDeviceMain()) {
+		localStorage.setItem('isDeviceMain', 'true');
+	}
+}
+
+export function isDeviceMain() {
+	return localStorage.getItem('isDeviceMain') === 'true';
+}
+
+export function clearMainStatus() {
+	if (isDeviceMain()) {
+		localStorage.removeItem('isDeviceMain');
+	}
+}
+

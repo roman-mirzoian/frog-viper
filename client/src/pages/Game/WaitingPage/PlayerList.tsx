@@ -23,6 +23,7 @@ export function PlayerList({
 						style={{ transform: `translateY(${translateY})` }}
 					>
 						{isPlayersConnected && playerName ? (
+							// @ts-expect-error tmp
 							<PlayerAvatar iconIndex={i} name={playerName} />
 						) : (
 							<Circle />

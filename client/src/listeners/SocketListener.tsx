@@ -6,38 +6,66 @@ import { useQuizContext } from "../context/QuizContext.tsx";
 export default function SocketListener() {
 	const { socket } = useSocketContext();
 	const navigate = useNavigate();
-	const { gameInfo, refreshData } = useQuizContext();
+	const { refreshData } = useQuizContext();
+
+	const handleNextRound = (updatedRound: number) => {
+		refreshData();
+		navigate(`/round-page?id=${updatedRound}`);
+	}
+
+	const handleNextPreview = () => {
+		refreshData();
+		navigate(`/round-preview`);
+	}
+
+	const handleShowResult = () => {
+		refreshData();
+		navigate("/results");
+	};
+
+	const handleFinalPage = () => {
+		refreshData();
+		navigate("/final-page");
+	}
 
 	useEffect(() => {
 		if (!socket) return;
 
-		const handleNextRound = (updatedRound: number) => {
-			refreshData();
-			navigate(`/round-page?id=${updatedRound}`);
+		const subscribeEvents = () => {
+			socket.on('start', handleNextPreview);
+			socket.on("nextRound", handleNextRound);
+			socket.on("nextRoundPreview", handleNextPreview);
+			socket.on("showResult", handleShowResult);
+			socket.on("end", handleFinalPage);
 		}
 
-		const handleShowResult = () => {
-			navigate("/results");
-		};
-
-		const handleFinalPage = () => {
-			navigate("/final-page");
-		}
-
-		socket.on('start', () => {
-			navigate('/round-preview?round=1');
-		});
-		socket.on("nextRound", handleNextRound);
-		socket.on("showResult", handleShowResult);
-		socket.on("end", handleFinalPage);
-
-		return () => {
-			socket.off('start');
+		const unsubscribeEvents = () => {
+			socket.off("start");
 			socket.off("nextRound", handleNextRound);
+			socket.off("nextRoundPreview", handleNextPreview);
 			socket.off("showResult", handleShowResult);
 			socket.off("end", handleFinalPage);
+		}
+
+		// Коли вперше підключаємось або перепідключаємось
+		socket.on("connect", () => {
+			console.log("[Socket] Connected:", socket.id);
+			refreshData();
+			unsubscribeEvents();
+			subscribeEvents();
+		});
+
+		// Якщо ми вже підключені — підписуємо події
+		if (socket.connected) {
+			subscribeEvents();
+		}
+
+
+		return () => {
+			unsubscribeEvents();
+			socket.off("connect");
 		};
-	}, [socket, navigate, gameInfo]);
+	}, [socket, navigate]);
 
 	return null;
 }

@@ -27,6 +27,10 @@ export default function AdminPage() {
 		});
 	}, [isGameStarted]);
 
+	const handleShowRoundPreview = () => {
+		socket?.emit('nextRoundPreview');
+	}
+
 	const handleStopGame = () => {
 		socket?.emit('end');
 		setIsGameStarted(false);
@@ -45,6 +49,7 @@ export default function AdminPage() {
 			<div className={styles.inner}>
 				<div className={styles.buttons}>
 					<StartButton isGameStarted={isGameStarted} setIsGameStarted={setIsGameStarted} />
+					<Button onClick={handleShowRoundPreview} disabled={!isGameStarted}>Показати раунд превʼю</Button>
 					<NextRoundButton isGameStarted={isGameStarted} />
 					<ResultsButton isGameStarted={isGameStarted} />
 					<Button onClick={handleStopGame} disabled={!isGameStarted}>Фінальний екран</Button>
