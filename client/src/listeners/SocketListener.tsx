@@ -28,6 +28,11 @@ export default function SocketListener() {
 		navigate("/final-page");
 	}
 
+	const handleResetGame = () => {
+		refreshData();
+		navigate("/main-waiting-page");
+	}
+
 	useEffect(() => {
 		if (!socket) return;
 
@@ -37,6 +42,7 @@ export default function SocketListener() {
 			socket.on("nextRoundPreview", handleNextPreview);
 			socket.on("showResult", handleShowResult);
 			socket.on("end", handleFinalPage);
+			socket.on("resetGame", handleResetGame);
 		}
 
 		const unsubscribeEvents = () => {
@@ -45,6 +51,7 @@ export default function SocketListener() {
 			socket.off("nextRoundPreview", handleNextPreview);
 			socket.off("showResult", handleShowResult);
 			socket.off("end", handleFinalPage);
+			socket.off("resetGame", handleResetGame);
 		}
 
 		// Коли вперше підключаємось або перепідключаємось

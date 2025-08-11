@@ -44,15 +44,22 @@ export default function AdminPage() {
 		socket?.emit('showPlayerVote');
 	}
 
+	const handleRestGame = () => {
+		socket?.emit('resetGame');
+	}
+
 	return (
 		<div className={styles.page}>
 			<div className={styles.inner}>
 				<div className={styles.buttons}>
 					<StartButton isGameStarted={isGameStarted} setIsGameStarted={setIsGameStarted} />
+					<Button onClick={handleStopGame} disabled={!isGameStarted}>Фінальний екран</Button>
+				</div>
+
+				<div className={styles.buttons}>
 					<Button onClick={handleShowRoundPreview} disabled={!isGameStarted}>Показати раунд превʼю</Button>
 					<NextRoundButton isGameStarted={isGameStarted} />
 					<ResultsButton isGameStarted={isGameStarted} />
-					<Button onClick={handleStopGame} disabled={!isGameStarted}>Фінальний екран</Button>
 				</div>
 
 				<div className={styles.buttons}>
@@ -67,7 +74,7 @@ export default function AdminPage() {
 					<Button onClick={() => navigate('/quiz-form')}>Додати блок питань</Button>
 				</div>
 
-				<Button onClick={() => {}} disabled={true}>Перезапустити гру</Button>
+				<Button onClick={handleRestGame}>Скинути гру</Button>
 			</div>
 		</div>
 	);

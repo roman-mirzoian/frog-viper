@@ -10,7 +10,7 @@ import {
   insertUserNameWithDeviceId,
   manualDisconnect,
   nextRound,
-  nextRoundPreview,
+  nextRoundPreview, resetGame,
   showPlayerInput,
   showPlayerVote,
   showResult,
@@ -89,6 +89,10 @@ io.on("connection", (socket) => {
     endGame(data, mainViewId);
   });
 
+  socket.on("resetGame", () => {
+    resetGame(mainViewId);
+  });
+
   socket.on("manualDisconnect", () => {
     manualDisconnect(socket, deviceId, userNameMap);
   });
@@ -96,7 +100,7 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, () => {
   const ip = getLocalIPAddress();
-  logInfo(`Server running on: ${ip}:${PORT}...`, {});
+  logInfo(`Server running on: ${ip}:${PORT}...`);
 });
 
 export { io, app };

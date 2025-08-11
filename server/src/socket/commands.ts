@@ -72,6 +72,15 @@ export function endGame(data: any, mainViewId: string) {
   io.to(getMainViewId(mainViewId)).emit('end', data);
 }
 
+export function resetGame(mainViewId: string) {
+  db.prepare(
+    `UPDATE game_state SET state = 'not_started', currentRound = 0`
+  ).run();
+  db.prepare(`DELETE FROM users`).run();
+  logInfo('Game reset');
+  io.to(getMainViewId(mainViewId)).emit('resetGame');
+}
+
 export function manualDisconnect(socket: Socket, deviceId: string, userNameMap: Record<string, string>) {
   delete userNameMap[deviceId];
   io.emit("getOnlineUsers", Object.values(userNameMap));

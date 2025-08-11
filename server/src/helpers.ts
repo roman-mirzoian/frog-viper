@@ -16,8 +16,10 @@ export function getLocalIPAddress() {
     }
 }
 
-export function logInfo(message: string, info: any) {
-    console.log(`[${new Date().toISOString()}] ${message}: ${JSON.stringify(info)}`);
+export function logInfo(message: string, info?: any) {
+    const baseMessage = `[${new Date().toISOString()}] ${message}`;
+    const dataMessage = info ? `${JSON.stringify(info)}` : null;
+    console.log(`${baseMessage}${dataMessage ? ': ' + dataMessage : ""}`);
     console.log("--------------------");
 }
 
