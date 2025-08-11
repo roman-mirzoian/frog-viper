@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RoundInput.module.scss";
 import axios from "axios";
 import { API_LOCAL } from "../../../constants";
@@ -8,6 +8,10 @@ import HomeButton from "../../../components/player/HomeButton.tsx";
 const RoundInput: React.FC = () => {
 	const [value, setValue] = useState("");
 	const navigation = useNavigate();
+
+	useEffect(() => {
+		document.title = 'Player round input';
+	}, []);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -29,8 +33,8 @@ const RoundInput: React.FC = () => {
 
 	return (
 		<div className={styles.page}>
-			<HomeButton />
 			<div className={styles.container}>
+			<HomeButton />
 				<label htmlFor="answer" className={styles.label}>
 					Впишіть ваш варіант:
 				</label>

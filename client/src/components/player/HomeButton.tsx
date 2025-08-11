@@ -8,5 +8,5 @@ export default function HomeButton() {
 		navigate("/users-waiting-list");
 	};
 
-	return <Button onClick={navigateToHome}>Повернутись головний екран очікування</Button>
+	return <div style={{marginBottom: '100px'}}><Button onClick={navigateToHome}>Повернутись на головний екран очікування</Button></div>
 }

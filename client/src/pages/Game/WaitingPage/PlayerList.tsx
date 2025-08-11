@@ -1,5 +1,6 @@
 import PlayerAvatar from "../../../components/player/PlayerAvatar.tsx";
 import { Player } from "../../../types";
+import { useEffect } from "react";
 
 export function PlayerList({
 	players,
@@ -9,6 +10,10 @@ export function PlayerList({
 	numCircles?: number;
 }) {
 	const isPlayersConnected = players.length > 0;
+
+	useEffect(() => {
+		document.title = 'Player list';
+	}, []);
 
 	return (
 		<div className="h-full flex justify-between items-center">

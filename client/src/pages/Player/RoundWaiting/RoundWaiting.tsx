@@ -9,6 +9,10 @@ const WaitingMessage: React.FC = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		document.title = 'Player waiting page';
+	}, []);
+
+	useEffect(() => {
 		socket?.on('showPlayerInput', () => {
 			navigate('/round-input');
 		});

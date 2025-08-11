@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSocketContext } from "../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
 import styles from "./ConnectionInput.module.scss";
@@ -6,10 +6,12 @@ import { clearMainStatus, setDeviceAsMain } from "../../utils/utils.ts";
 
 function ConnectionInput() {
 	const [userName, setUserName] = useState<string>("Not set");
-
 	const { socket } = useSocketContext();
-
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		document.title = 'Player connection page';
+	}, []);
 
 	const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserName(e.target.value);

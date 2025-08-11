@@ -1,8 +1,13 @@
 import styles from "./RoundPreview.module.scss";
 import { useQuizContext } from "../../../context/QuizContext.tsx";
+import { useEffect } from "react";
 
 export default function RoundPreview() {
 	const { gameInfo } = useQuizContext();
+
+	useEffect(() => {
+		document.title = 'Round preview page';
+	}, []);
 
 	return (
 		<>

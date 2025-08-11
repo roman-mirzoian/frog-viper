@@ -19,6 +19,10 @@ const PlayerOptions: React.FC = () => {
 	const {currentQuestionBlock, gameInfo, refreshData} = useQuizContext();
 
 	useEffect(() => {
+		document.title = 'Player vote page';
+	}, []);
+
+	useEffect(() => {
 		refreshData();
 		const currentAnswer = getCurrentQuestion(currentQuestionBlock, +gameInfo.currentRound - 1);
 

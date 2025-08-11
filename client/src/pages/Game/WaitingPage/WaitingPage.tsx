@@ -9,6 +9,10 @@ export default function WaitingPage() {
 	const { onlineUsers } = useSocketContext();
 
 	useEffect(() => {
+		document.title = 'Main view waiting page';
+	}, []);
+
+	useEffect(() => {
 		setPlayers(
 			// @ts-expect-error tmp
 			onlineUsers?.map((user) => ({

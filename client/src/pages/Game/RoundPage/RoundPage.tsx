@@ -9,6 +9,10 @@ export default function RoundPage() {
 	const [currentQuestion, setCurrentQuestion] = useState<any>(null);
 
 	useEffect(() => {
+		document.title = 'Round page';
+	}, []);
+
+	useEffect(() => {
 		if(currentQuestionBlock && gameInfo) {
 			const currentQuestion = getCurrentQuestion(currentQuestionBlock, +gameInfo.currentRound - 1);
 			setCurrentQuestion(currentQuestion);

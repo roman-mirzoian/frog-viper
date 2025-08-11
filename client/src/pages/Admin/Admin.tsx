@@ -16,6 +16,10 @@ export default function AdminPage() {
 	const { socket } = useSocketContext();
 
 	useEffect(() => {
+		document.title = 'Admin page';
+	}, []);
+
+	useEffect(() => {
 		refreshData();
 		setIsGameStarted(gameInfo?.state === 'started');
 	}, [isGameStarted, gameInfo]);

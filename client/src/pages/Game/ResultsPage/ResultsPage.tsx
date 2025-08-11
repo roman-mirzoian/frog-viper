@@ -7,6 +7,8 @@ const ResultsPage: React.FC = () => {
 	const [players, setPlayers] = useState<Player[]>([]);
 
 	useEffect(() => {
+		document.title = 'Results page';
+
 		const getUsers = () => {
 			fetch(`${API_NETWORK}/admin/users`)
 				.then(res => res.json())
