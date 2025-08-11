@@ -33,7 +33,7 @@ const PlayerOptions: React.FC = () => {
 
 		getOptions().then((options: Option[]) => {
 			// для правильної відповіді задаємо девайс айді поточного користувача
-			setOptions([...options, { deviceId: getDeviceId(), roundAnswer: currentAnswer?.correctWord }]);
+			setOptions([...options, { deviceId: getDeviceId(), roundAnswer: currentAnswer?.correctWord } as Option]);
 		});
 	}, [currentQuestionBlock, gameInfo]);
 
