@@ -41,6 +41,11 @@ export function nextRound(data: any, mainViewId: string) {
   io.to(getMainViewId(mainViewId)).emit('nextRound', data);
 }
 
+export function nextRoundPreview(data: any, mainViewId: string) {
+  logInfo('Next round preview', data);
+  io.to(getMainViewId(mainViewId)).emit('nextRoundPreview', data);
+}
+
 export function showPlayerInput() {
   io.emit('showPlayerInput');
 }

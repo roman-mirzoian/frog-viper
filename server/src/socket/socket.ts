@@ -10,6 +10,7 @@ import {
   insertUserNameWithDeviceId,
   manualDisconnect,
   nextRound,
+  nextRoundPreview,
   showPlayerInput,
   showPlayerVote,
   showResult,
@@ -51,12 +52,21 @@ io.on("connection", (socket) => {
     getCurrentUsersState();
   });
 
+  socket.on("reconnectMain", () => {
+    mainViewId = socket.id;
+    logInfo('main view reconnected', mainViewId);
+  });
+
   socket.on('start', () => {
     startGame(userNameMap, mainViewId);
   });
 
   socket.on('nextRound', (data) => {
     nextRound(data, mainViewId);
+  });
+
+  socket.on('nextRoundPreview', (data) => {
+    nextRoundPreview(data, mainViewId);
   });
 
   socket.on('showPlayerInput', () => {
