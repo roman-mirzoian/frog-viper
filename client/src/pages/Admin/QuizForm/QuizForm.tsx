@@ -8,17 +8,21 @@ type Question = {
 	text: string;
 	correctWord: string;
 };
+export type Media = {
+	url: string;
+	correctWord: string;
+};
 
 type QuizData = {
 	questions: Question[];
-	imageLinks: string[];
-	videoLinks: string[];
+	imageLinks: Media[];
+	videoLinks: Media[];
 };
 
 const quizDataTemplate: QuizData = {
 	questions: Array(5).fill({ text: "", correctWord: "" }),
-	imageLinks: Array(3).fill(""),
-	videoLinks: Array(2).fill(""),
+	imageLinks: Array(3).fill({ url: "", correctWord: "" }),
+	videoLinks: Array(2).fill({ url: "", correctWord: "" }),
 };
 
 const QuizForm: React.FC = () => {
@@ -32,15 +36,15 @@ const QuizForm: React.FC = () => {
 		setQuizData({ ...quizData, questions: updatedQuestions });
 	};
 
-	const handleImageLinkChange = (index: number, value: string) => {
+	const handleImageLinkChange = (index: number, field: string, value: string) => {
 		const updatedLinks = [ ...quizData.imageLinks ];
-		updatedLinks[index] = value;
+		updatedLinks[index] = { ...updatedLinks[index], [field]: value };
 		setQuizData({ ...quizData, imageLinks: updatedLinks });
 	};
 
-	const handleVideoLinkChange = (index: number, value: string) => {
+	const handleVideoLinkChange = (index: number, field: string, value: string) => {
 		const updatedLinks = [ ...quizData.videoLinks ];
-		updatedLinks[index] = value;
+		updatedLinks[index] = { ...updatedLinks[index], [field]: value };
 		setQuizData({ ...quizData, videoLinks: updatedLinks });
 	};
 
@@ -108,32 +112,56 @@ const QuizForm: React.FC = () => {
 				<section>
 					<h2>Зображення</h2>
 					{quizData.imageLinks.map((link, i) => (
-						<label key={i}>
-							Зображення {i + 1}:
-							<input
-								type="url"
-								value={link}
-								onChange={(e) => handleImageLinkChange(i, e.target.value)}
-								placeholder="https://example.com/image.jpg"
-								required
-							/>
-						</label>
+						<div key={i} className={styles.questionBlock}>
+							<label key={i}>
+								Зображення {i + 1}:
+								<input
+									type="url"
+									value={link.url}
+									onChange={(e) => handleImageLinkChange(i, 'url', e.target.value)}
+									placeholder="https://example.com/image.jpg"
+									required
+								/>
+							</label>
+							<label>
+								Правильне слово:
+								<input
+									type="text"
+									value={link.correctWord}
+									onChange={(e) => handleImageLinkChange(i, "correctWord", e.target.value)}
+									placeholder="Правильне слово"
+									required
+								/>
+							</label>
+						</div>
 					))}
 				</section>
 
 				<section>
 					<h2>Відео</h2>
 					{quizData.videoLinks.map((link, i) => (
-						<label key={i}>
-							Відео {i + 1}:
-							<input
-								type="url"
-								value={link}
-								onChange={(e) => handleVideoLinkChange(i, e.target.value)}
-								placeholder="https://youtube.com/..."
-								required
-							/>
-						</label>
+						<div key={i} className={styles.questionBlock}>
+							<label key={i}>
+								Відео {i + 1}:
+								<input
+									type="url"
+									value={link.url}
+									onChange={(e) => handleVideoLinkChange(i, 'url', e.target.value)}
+									placeholder="https://youtube.com/..."
+									required
+								/>
+							</label>
+							<label>
+								Правильне слово:
+								<input
+									type="text"
+									value={link.correctWord}
+									onChange={(e) => handleVideoLinkChange(i, "correctWord", e.target.value)}
+									placeholder="Правильне слово"
+									required
+								/>
+							</label>
+						</div>
 					))}
 				</section>
 

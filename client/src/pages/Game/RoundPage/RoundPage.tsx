@@ -1,8 +1,8 @@
 import styles from "./RoundPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
-import { API_LOCAL } from "../../../constants";
 import { useQuizContext } from "../../../context/QuizContext.tsx";
 import YouTubePlayer from "../../../components/youTubePlayer/YouTubePlayer.tsx";
+import { ImageFromProxy } from "../../../components/imageFromProxy/ImageFromProxy.tsx";
 
 export default function RoundPage() {
 	const { currentQuestionBlock, gameInfo } = useQuizContext();
@@ -23,10 +23,10 @@ export default function RoundPage() {
 			<div className={styles.roundDescription}>
 				{currentQuestion?.text && <p>{currentQuestion.text}</p>}
 				{+gameInfo.currentRound - 1 > 4 && +gameInfo.currentRound - 1 < 8 && currentQuestion && (
-					<img src={`${API_LOCAL}/game/image?url=${encodeURIComponent(currentQuestion)}`} alt="currentQuestion" />
+					<ImageFromProxy  url={currentQuestion.url} />
 				)}
 				{+gameInfo.currentRound - 1 > 7 && currentQuestion && (
-					<YouTubePlayer url={currentQuestionMemo} />
+					<YouTubePlayer url={currentQuestionMemo.url} />
 				)}
 				{!currentQuestion && <div style={{color: "white"}}>Питання вже все</div>}
 			</div>

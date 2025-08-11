@@ -5,6 +5,7 @@ import styles from './QuizTable.module.scss';
 import { API_LOCAL } from "../../../constants";
 import YouTubePlayer from "../../../components/youTubePlayer/YouTubePlayer.tsx";
 import { ImageFromProxy } from "../../../components/imageFromProxy/ImageFromProxy.tsx";
+import { Media } from "./QuizForm.tsx";
 
 export interface Quiz {
 	id: number;
@@ -66,8 +67,11 @@ const QuizTable = () => {
 					<div className={styles.section}>
 						<h4>Зображення:</h4>
 						<div className={styles.mediaGrid}>
-							{getArrayFromString(quiz.imageLinks).map((img: string, idx: number) => (
-								<ImageFromProxy key={idx} url={img} />
+							{getArrayFromString(quiz.imageLinks).map((img: Media, idx: number) => (
+								<div key={idx}>
+									<p>Правильне слово: <strong>{img.correctWord}</strong></p>
+									<ImageFromProxy  url={img.url} />
+								</div>
 							))}
 						</div>
 					</div>
@@ -75,8 +79,11 @@ const QuizTable = () => {
 					<div className={styles.section}>
 						<h4>Відео:</h4>
 						<div className={styles.mediaGrid}>
-							{getArrayFromString(quiz.videoLinks).map((link: string, idx: number) => (
-								<YouTubePlayer key={idx} url={link} />
+							{getArrayFromString(quiz.videoLinks).map((link: Media, idx: number) => (
+								<div key={idx}>
+									<p>Правильне слово: <strong>{link.correctWord}</strong></p>
+									<YouTubePlayer key={idx} url={link.url} />
+								</div>
 							))}
 						</div>
 					</div>

@@ -28,9 +28,7 @@ const PlayerOptions: React.FC = () => {
 		}
 
 		getOptions().then((options: Option[]) => {
-			if(currentAnswer) {
-				setOptions([...options, { deviceId: getDeviceId(), roundAnswer: currentAnswer.correctWord }]);
-			}
+			setOptions([...options, { deviceId: getDeviceId(), roundAnswer: currentAnswer?.correctWord }]);
 		});
 	}, [currentQuestionBlock, gameInfo]);
 

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useSocketContext } from "../../context/SocketContext.tsx";
 import Button from "../../components/buttons/Button.tsx";
 import StartButton from "./buttons/StartButton.tsx";
@@ -8,24 +7,18 @@ import NextRoundButton from "./buttons/NextRoundButton.tsx";
 import ResultsButton from "./buttons/ResultsButton.tsx";
 import ScoreTable from "./ScoreTable.tsx";
 import styles from './Admin.module.scss';
-import { API_LOCAL } from "../../constants";
+import { useQuizContext } from "../../context/QuizContext.tsx";
 
 export default function AdminPage() {
 	const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+	const { gameInfo, refreshData } = useQuizContext();
 	const navigate = useNavigate();
 	const { socket } = useSocketContext();
 
 	useEffect(() => {
-		async function getGameInfo() {
-			const gameInfo = await axios.get(`${API_LOCAL}/game/info`);
-
-			return gameInfo.data;
-		}
-
-		getGameInfo().then(info => {
-			setIsGameStarted(info?.state === 'started');
-		});
-	}, [isGameStarted]);
+		refreshData();
+		setIsGameStarted(gameInfo?.state === 'started');
+	}, [isGameStarted, gameInfo]);
 
 	const handleShowRoundPreview = () => {
 		socket?.emit('nextRoundPreview');
