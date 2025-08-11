@@ -29,7 +29,7 @@ const io = new Server(server, {
   },
 });
 
-const userNameMap: Record<string, string> = {};
+let userNameMap: Record<string, string> = {};
 let mainViewId = '';
 
 io.on("connection", (socket) => {
@@ -86,10 +86,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on('end', (data) => {
+    userNameMap = {};
+    emitConnectedUsers(userNameMap);
     endGame(data, mainViewId);
   });
 
   socket.on("resetGame", () => {
+    userNameMap = {};
+    emitConnectedUsers(userNameMap);
     resetGame(mainViewId);
   });
 

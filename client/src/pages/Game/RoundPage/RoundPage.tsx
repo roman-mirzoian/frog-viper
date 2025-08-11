@@ -34,7 +34,7 @@ export default function RoundPage() {
 	);
 }
 
-function getCurrentQuestion(currentQuestionBlock: any, currentRound: number ) {
+export function getCurrentQuestion(currentQuestionBlock: any, currentRound: number ) {
 	if(!currentQuestionBlock) return;
 
 	let block = currentQuestionBlock.questions;

@@ -1,5 +1,5 @@
-import { PLAYER_ICON_LINKS } from "../constants";
-import { Player } from "../types/index";
+import { PLAYER_ICON_LINKS } from "../../constants";
+import { Player } from "../../types";
 
 export default function PlayerAvatar({
 	iconIndex,

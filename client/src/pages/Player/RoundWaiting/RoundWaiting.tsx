@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./RoundWaiting.module.scss";
 import { useSocketContext } from "../../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../components/player/HomeButton.tsx";
 
 const WaitingMessage: React.FC = () => {
 	const { socket } = useSocketContext();
@@ -18,6 +19,7 @@ const WaitingMessage: React.FC = () => {
 
 	return (
 		<div className={styles.wrapper}>
+			<HomeButton />
 			<p className={styles.message}>Чекайте</p>
 		</div>
 	);

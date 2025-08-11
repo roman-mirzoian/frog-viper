@@ -3,6 +3,7 @@ import styles from "./RoundInput.module.scss";
 import axios from "axios";
 import { API_LOCAL } from "../../../constants";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../components/player/HomeButton.tsx";
 
 const RoundInput: React.FC = () => {
 	const [value, setValue] = useState("");
@@ -28,6 +29,7 @@ const RoundInput: React.FC = () => {
 
 	return (
 		<div className={styles.page}>
+			<HomeButton />
 			<div className={styles.container}>
 				<label htmlFor="answer" className={styles.label}>
 					Впишіть ваш варіант:

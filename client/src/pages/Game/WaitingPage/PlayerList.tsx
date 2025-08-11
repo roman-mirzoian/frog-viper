@@ -1,4 +1,4 @@
-import PlayerAvatar from "../../../components/PlayerAvatar.tsx";
+import PlayerAvatar from "../../../components/player/PlayerAvatar.tsx";
 import { Player } from "../../../types";
 
 export function PlayerList({

@@ -46,6 +46,7 @@ export default function AdminPage() {
 
 	const handleRestGame = () => {
 		socket?.emit('resetGame');
+		setIsGameStarted(false);
 	}
 
 	return (

@@ -24,9 +24,9 @@ function WaitingList() {
 
 	return (
 		<div className={styles.waitingList}>
-			<p>Connected users</p>
+			<p>Connected users:</p>
 			<ul>
-				{onlineUsers.map((user, index) => (
+				{onlineUsers?.map((user, index) => (
 					<li key={index}>{user}</li>
 				))}
 			</ul>
