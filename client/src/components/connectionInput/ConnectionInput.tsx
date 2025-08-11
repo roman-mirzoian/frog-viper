@@ -27,6 +27,7 @@ function ConnectionInput() {
 		} else {
 			navigate("/users-waiting-list");
 			clearMainStatus();
+			localStorage.setItem('userName', userName);
 		}
 	};
 

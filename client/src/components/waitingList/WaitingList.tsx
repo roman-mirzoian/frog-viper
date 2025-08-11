@@ -8,6 +8,10 @@ function WaitingList() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		document.title = 'Players waiting list page';
+	}, []);
+
+	useEffect(() => {
 		socket?.on('showPlayerInput', () => {
 			navigate('/round-input');
 		});
@@ -19,6 +23,7 @@ function WaitingList() {
 
 	const disconnect = () => {
 		socket?.emit("manualDisconnect", { reason: "user-logout" });
+		localStorage.removeItem('userName');
 		navigate("/");
 	};
 
@@ -27,7 +32,7 @@ function WaitingList() {
 			<p>Connected users:</p>
 			<ul>
 				{onlineUsers?.map((user, index) => (
-					<li key={index}>{user}</li>
+					<li key={index}>{user} {user === localStorage.getItem('userName') ? '(це ти)' : ''}</li>
 				))}
 			</ul>
 			<button onClick={disconnect}>Disconnect</button>
