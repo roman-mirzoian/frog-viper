@@ -28,6 +28,7 @@ const PlayerOptions: React.FC = () => {
 		}
 
 		getOptions().then((options: Option[]) => {
+			// для правильної відповіді задаємо девайс айді поточного користувача
 			setOptions([...options, { deviceId: getDeviceId(), roundAnswer: currentAnswer?.correctWord }]);
 		});
 	}, [currentQuestionBlock, gameInfo]);
@@ -35,6 +36,8 @@ const PlayerOptions: React.FC = () => {
 	const handleSelect = async (option: Option) => {
 		await axios.post(`${API_LOCAL}/users/vote`, {
 			playerDeviceId: option.deviceId,
+			// якщо девайсАйді питання співпадає з девайс айді поточного користувача - значить він голосував за правильну відповідь
+			isCorrectAnswer: option.deviceId === getDeviceId()
 		});
 		navigate('/round-waiting');
 	}

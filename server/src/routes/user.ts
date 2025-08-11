@@ -36,13 +36,14 @@ router.get('/options', (req: Request, res: Response) => {
 });
 
 router.post('/vote', (req: Request, res: Response) => {
-  const { playerDeviceId } = req.body;
+  const { playerDeviceId, isCorrectAnswer } = req.body;
+  const points = isCorrectAnswer ? 1000 : 500;
 
   db.prepare(`
       UPDATE users
-      SET score = score + 1
+      SET score = score + ?
       WHERE deviceId = ?
-  `).run(playerDeviceId);
+  `).run(points, playerDeviceId);
 
   getCurrentUsersState();
 
