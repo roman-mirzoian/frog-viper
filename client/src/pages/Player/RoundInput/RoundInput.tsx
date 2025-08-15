@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./RoundInput.module.scss";
 import axios from "axios";
-import { API_LOCAL } from "../../../constants";
+import { API_NETWORK } from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../components/player/HomeButton.tsx";
 
@@ -22,7 +22,7 @@ const RoundInput: React.FC = () => {
 
 		const deviceId = localStorage.getItem('deviceId');
 		try {
-			await axios.post(`${API_LOCAL}/users/answer`, { deviceId, answer: value.trim() });
+			await axios.post(`${API_NETWORK}/users/answer`, { deviceId, answer: value.trim() });
 			setValue("");
 
 			navigation('/round-waiting');

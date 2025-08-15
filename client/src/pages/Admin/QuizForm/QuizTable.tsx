@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from './QuizTable.module.scss';
-import { API_LOCAL } from "../../../constants";
+import { API_NETWORK } from "../../../constants";
 import YouTubePlayer from "../../../components/youTubePlayer/YouTubePlayer.tsx";
 import { ImageFromProxy } from "../../../components/imageFromProxy/ImageFromProxy.tsx";
 import { Media } from "./QuizForm.tsx";
@@ -21,19 +21,19 @@ const QuizTable = () => {
 
 	useEffect(() => {
 		async function getQuizes() {
-			const quizes = await axios.get(`${API_LOCAL}/admin/quizes`);
+			const quizes = await axios.get(`${API_NETWORK}/admin/quizes`);
 			return quizes.data;
 		}
 		getQuizes().then(setQuizesToSelect);
 	}, []);
 
 	const handleQuizSelect = async (quizId: number) => {
-		await axios.post(`${API_LOCAL}/admin/select-quiz`, { quizId });
+		await axios.post(`${API_NETWORK}/admin/select-quiz`, { quizId });
 		navigation('/admin');
 	}
 
 	const handleQuizDelete = async (quizId: number) => {
-		await axios.post(`${API_LOCAL}/admin/delete-quiz`, { quizId });
+		await axios.post(`${API_NETWORK}/admin/delete-quiz`, { quizId });
 		setQuizesToSelect((currentQuizes) => currentQuizes.filter(quiz => quiz.id !== quizId));
 	}
 

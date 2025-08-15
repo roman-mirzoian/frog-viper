@@ -5,10 +5,4 @@ export const PLAYER_ICON_LINKS = [
 	"https://lcdn-eu.icons8.com/c/7rxlVp97V0eCs_xdMMNZRA/cf5a091f30e112233e4f9582bf1c5e67ad99f6cb.webp", // mouse
 	"https://lcdn-eu.icons8.com/c/7rxlVp97V0eCs_xdMMNZRA/ad8ad2fbecb7ff442bbbb831adfbdbdc98dc9d90.webp", // fox
 ];
-
-// export const API_NETWORK = "http://192.168.11.111:8080"; // combinaty
-// export const API_NETWORK = "http://192.168.100.5:3000"; // home 1
-// export const API_NETWORK = "http://192.168.100.3:3000"; // home 2
-export const API_NETWORK = import.meta.env.VITE_API_URL || "http://10.214.66.74:10000"; // render com
-// export const API_LOCAL = "http://localhost:3000";
-export const API_LOCAL = API_NETWORK; // мда :)
+export const API_NETWORK = import.meta.env.VITE_API_URL;

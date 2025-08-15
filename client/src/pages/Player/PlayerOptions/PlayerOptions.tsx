@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from './PlayerOptions.module.scss';
 import axios from "axios";
-import { API_LOCAL } from "../../../constants";
+import { API_NETWORK } from "../../../constants";
 import { getDeviceId } from "../../../utils/utils.ts";
 import { useNavigate } from "react-router-dom";
 import { useQuizContext } from "../../../context/QuizContext.tsx";
@@ -27,7 +27,7 @@ const PlayerOptions: React.FC = () => {
 		const currentAnswer = getCurrentQuestion(currentQuestionBlock, +gameInfo.currentRound - 1);
 
 		async function getOptions() {
-			const options = await axios.get(`${API_LOCAL}/users/options?deviceId=${getDeviceId()}`);
+			const options = await axios.get(`${API_NETWORK}/users/options?deviceId=${getDeviceId()}`);
 			return options.data;
 		}
 
@@ -38,7 +38,7 @@ const PlayerOptions: React.FC = () => {
 	}, [currentQuestionBlock, gameInfo]);
 
 	const handleSelect = async (option: Option) => {
-		await axios.post(`${API_LOCAL}/users/vote`, {
+		await axios.post(`${API_NETWORK}/users/vote`, {
 			playerDeviceId: option.deviceId,
 			// якщо девайсАйді питання співпадає з девайс айді поточного користувача - значить він голосував за правильну відповідь
 			isCorrectAnswer: option.deviceId === getDeviceId()
