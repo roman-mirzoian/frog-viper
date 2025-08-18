@@ -15,7 +15,6 @@ export default function ScoreTable() {
 		});
 	}, [socket]);
 
-	console.log({playersState});
 	return (
 		<>
 			<h2>Поточний блок: {currentQuestionBlock.blockName}</h2>

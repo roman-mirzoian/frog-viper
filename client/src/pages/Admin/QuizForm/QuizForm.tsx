@@ -50,7 +50,7 @@ const QuizForm: React.FC = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Quiz Data:", { ...quizData, blockName });
+
 		try {
 			await axios.post(`${API_NETWORK}/admin/add-quiz`, { ...quizData, blockName });
 			setBlockName('');

@@ -12,7 +12,6 @@ const validateId = (id: string | null | undefined) =>
 	typeof id === 'string' && /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
 
 export function extractYouTubeId(link: string): string | null {
-	console.log({link});
 	if (!link) return null;
 
 	// спроба через URL API
