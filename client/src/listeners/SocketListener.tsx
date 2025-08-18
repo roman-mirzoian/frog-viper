@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useSocketContext } from "../context/SocketContext"; // твій контекст сокета
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useQuizContext } from "../context/QuizContext.tsx";
 
 export default function SocketListener() {
 	const { socket } = useSocketContext();
 	const navigate = useNavigate();
 	const { refreshData } = useQuizContext();
+	const location = useLocation();
 
 	const handleNextRound = (updatedRound: number) => {
 		refreshData();
@@ -35,7 +36,18 @@ export default function SocketListener() {
 
 	const handleResetGame = () => {
 		refreshData();
-		navigate("/main-waiting-page");
+
+		switch (location.pathname) {
+			case '/admin':
+			case '/users-waiting-list':
+			case '/':
+				return;
+			case '/round-input':
+			case '/round-waiting':
+				return navigate('/');
+			default:
+				navigate("/main-waiting-page");
+		}
 	}
 
 	useEffect(() => {

@@ -83,7 +83,7 @@ export function resetGame(mainViewId: string) {
   ).run();
   db.prepare(`DELETE FROM users`).run();
   logInfo('Game reset');
-  io.to(getMainViewId(mainViewId)).emit('resetGame');
+  io.emit('resetGame');
 }
 
 export function manualDisconnect(socket: Socket, deviceId: string, userNameMap: Record<string, string>) {
