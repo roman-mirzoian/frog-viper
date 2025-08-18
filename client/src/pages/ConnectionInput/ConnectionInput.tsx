@@ -3,6 +3,7 @@ import { useSocketContext } from "../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
 import styles from "./ConnectionInput.module.scss";
 import { clearMainStatus, setDeviceAsMain } from "../../utils/utils.ts";
+import Button from "../../components/buttons/Button.tsx";
 
 function ConnectionInput() {
 	const [userName, setUserName] = useState<string>("Not set");
@@ -32,13 +33,17 @@ function ConnectionInput() {
 	};
 
 	return (
-		<div className={styles.connectionInput}>
-			<div>
-				<h2>Connect to the server</h2>
-				<p>Enter your username</p>
+		<div className={`${styles.connectionInput} bg-frog-viper`}>
+			<div className={styles.connectionInputContent}>
+				<div className='flex flex-col justify-center items-center'>
+					<h1>Приєднатися до гри</h1>
+				</div>
+				<label>
+					<p>Введіть ваше імʼя</p>
+					<input type="text" onChange={handleUserNameChange} />
+				</label>
+				<Button onClick={connect}>Тиць</Button>
 			</div>
-			<input type="text" onChange={handleUserNameChange} />
-			<button onClick={connect}>Connect</button>
 		</div>
 	);
 }

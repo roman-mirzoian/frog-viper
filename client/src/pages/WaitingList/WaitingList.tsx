@@ -2,6 +2,7 @@ import { useSocketContext } from "../../context/SocketContext.tsx";
 import { useNavigate } from "react-router-dom";
 import styles from './WaitingList.module.scss';
 import { useEffect } from "react";
+import Button from "../../components/buttons/Button.tsx";
 
 function WaitingList() {
 	const { socket, onlineUsers } = useSocketContext();
@@ -28,14 +29,16 @@ function WaitingList() {
 	};
 
 	return (
-		<div className={styles.waitingList}>
-			<p>Connected users:</p>
-			<ul>
-				{onlineUsers?.map((user, index) => (
-					<li key={index}>{user} {user === localStorage.getItem('userName') ? '(це ти)' : ''}</li>
-				))}
-			</ul>
-			<button onClick={disconnect}>Disconnect</button>
+		<div className={`${styles.waitingList} bg-frog-viper`}>
+			<div className={styles.waitingListContent}>
+				<h2>Вже підключилися:</h2>
+				<ul>
+					{onlineUsers?.map((user, index) => (
+						<li key={index}>{user} {user === localStorage.getItem('userName') ? '(це ти)' : ''}</li>
+					))}
+				</ul>
+				<Button onClick={disconnect}>Відключитися</Button>
+			</div>
 		</div>
 	);
 }

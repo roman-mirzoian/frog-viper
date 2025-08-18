@@ -22,7 +22,7 @@ const WaitingMessage: React.FC = () => {
 	}, [navigate, socket]);
 
 	return (
-		<div className={styles.wrapper}>
+		<div className={`${styles.wrapper} bg-frog-viper`}>
 			<HomeButton />
 			<p className={styles.message}>Чекайте</p>
 		</div>

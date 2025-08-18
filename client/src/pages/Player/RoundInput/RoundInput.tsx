@@ -32,7 +32,7 @@ const RoundInput: React.FC = () => {
 	};
 
 	return (
-		<div className={styles.page}>
+		<div className={`${styles.page} bg-frog-viper`}>
 			<div className={styles.container}>
 			<HomeButton />
 				<label htmlFor="answer" className={styles.label}>

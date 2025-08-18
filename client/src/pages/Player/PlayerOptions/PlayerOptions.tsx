@@ -47,7 +47,7 @@ const PlayerOptions: React.FC = () => {
 	}
 
 	return (
-		<div className={styles.wrapper}>
+		<div className={`${styles.wrapper} bg-frog-viper`}>
 			<HomeButton />
 			<p className={styles.title}>Оберіть правильний варіант:</p>
 			<div className={styles.options}>

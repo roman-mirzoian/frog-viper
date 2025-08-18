@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import WaitingList from "./components/waitingList/WaitingList.tsx";
-import ConnectionInput from "./components/connectionInput/ConnectionInput.tsx";
+import WaitingList from "./pages/WaitingList/WaitingList.tsx";
+import ConnectionInput from "./pages/ConnectionInput/ConnectionInput.tsx";
 import WaitingPage from "./pages/Game/WaitingPage/WaitingPage";
 import RoundPreview from "./pages/Game/RoundPreview/RoundPreview";
 import RoundPage from "./pages/Game/RoundPage/RoundPage";
