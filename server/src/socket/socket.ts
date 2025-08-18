@@ -10,10 +10,12 @@ import {
   insertUserNameWithDeviceId,
   manualDisconnect,
   nextRound,
-  nextRoundPreview, resetGame,
+  nextRoundPreview,
+  resetGame,
   showPlayerInput,
   showPlayerVote,
   showResult,
+  showRoundOptionsPreview,
   startGame,
 } from "@/socket/commands";
 
@@ -67,6 +69,10 @@ io.on("connection", (socket) => {
 
   socket.on('nextRoundPreview', (data) => {
     nextRoundPreview(data, mainViewId);
+  });
+
+  socket.on('showRoundOptionsPreview', (data) => {
+    showRoundOptionsPreview(data, mainViewId);
   });
 
   socket.on('showPlayerInput', () => {

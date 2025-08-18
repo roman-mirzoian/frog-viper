@@ -18,6 +18,11 @@ export default function SocketListener() {
 		navigate(`/round-preview`);
 	}
 
+	const handleShowOptionsPreview = () => {
+		refreshData();
+		navigate(`/round-options`);
+	}
+
 	const handleShowResult = () => {
 		refreshData();
 		navigate("/results");
@@ -40,6 +45,7 @@ export default function SocketListener() {
 			socket.on('start', handleNextPreview);
 			socket.on("nextRound", handleNextRound);
 			socket.on("nextRoundPreview", handleNextPreview);
+			socket.on("showRoundOptionsPreview", handleShowOptionsPreview);
 			socket.on("showResult", handleShowResult);
 			socket.on("end", handleFinalPage);
 			socket.on("resetGame", handleResetGame);
@@ -49,6 +55,7 @@ export default function SocketListener() {
 			socket.off("start");
 			socket.off("nextRound", handleNextRound);
 			socket.off("nextRoundPreview", handleNextPreview);
+			socket.off("showRoundOptionsPreview", handleShowOptionsPreview);
 			socket.off("showResult", handleShowResult);
 			socket.off("end", handleFinalPage);
 			socket.off("resetGame", handleResetGame);

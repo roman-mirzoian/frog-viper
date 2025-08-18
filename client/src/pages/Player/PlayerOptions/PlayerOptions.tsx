@@ -8,7 +8,7 @@ import { useQuizContext } from "../../../context/QuizContext.tsx";
 import { getCurrentQuestion } from "../../Game/RoundPage/RoundPage.tsx";
 import HomeButton from "../../../components/player/HomeButton.tsx";
 
-interface Option {
+export interface Option {
 	deviceId: string;
 	roundAnswer: string;
 }

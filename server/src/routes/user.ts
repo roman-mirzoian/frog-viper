@@ -50,4 +50,12 @@ router.post('/vote', (req: Request, res: Response) => {
   res.status(200).json({ success: true });
 });
 
+router.get('/current-answers', (req: Request, res: Response) => {
+  const rows = db.prepare(`
+      SELECT roundAnswer FROM users
+    `).all();
+
+  res.status(200).json(Object.values(rows));
+});
+
 export default router;

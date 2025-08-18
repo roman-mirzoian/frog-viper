@@ -46,6 +46,11 @@ export function nextRoundPreview(data: any, mainViewId: string) {
   io.to(getMainViewId(mainViewId)).emit('nextRoundPreview', data);
 }
 
+export function showRoundOptionsPreview(data: any, mainViewId: string) {
+  logInfo('Show round options preview', data);
+  io.to(getMainViewId(mainViewId)).emit('showRoundOptionsPreview', data);
+}
+
 export function showPlayerInput() {
   io.emit('showPlayerInput');
 }

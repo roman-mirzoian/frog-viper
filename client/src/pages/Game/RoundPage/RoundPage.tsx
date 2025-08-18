@@ -4,7 +4,7 @@ import { useQuizContext } from "../../../context/QuizContext.tsx";
 import YouTubePlayer from "../../../components/youTubePlayer/YouTubePlayer.tsx";
 import { ImageFromProxy } from "../../../components/imageFromProxy/ImageFromProxy.tsx";
 
-export default function RoundPage() {
+export default function RoundPage({ children }: { children?: React.ReactNode}) {
 	const { currentQuestionBlock, gameInfo } = useQuizContext();
 	const [currentQuestion, setCurrentQuestion] = useState<any>(null);
 
@@ -21,19 +21,33 @@ export default function RoundPage() {
 
 	const currentQuestionMemo = useMemo(() => currentQuestion, [currentQuestion]);
 
+	const currentRoundView = () => {
+		if (!currentQuestion) {
+			return <div style={{color: "white"}}>Питання вже все</div>
+		}
+
+		if (currentQuestion?.text) {
+			return <p>{currentQuestion.text}</p>;
+		}
+
+		const currentIndex = +gameInfo.currentRound - 1;
+
+		if (currentIndex > 4 && currentIndex < 8 && currentQuestion) {
+			return <ImageFromProxy  url={currentQuestion.url} />
+		}
+
+		if (currentIndex > 7 && currentQuestion) {
+			return <YouTubePlayer url={currentQuestionMemo.url} />
+		}
+	}
+
 	return (
 		<>
 			<div className={styles.roundBackground}></div>
-			<div className={styles.roundDescription}>
-				{currentQuestion?.text && <p>{currentQuestion.text}</p>}
-				{+gameInfo.currentRound - 1 > 4 && +gameInfo.currentRound - 1 < 8 && currentQuestion && (
-					<ImageFromProxy  url={currentQuestion.url} />
-				)}
-				{+gameInfo.currentRound - 1 > 7 && currentQuestion && (
-					<YouTubePlayer url={currentQuestionMemo.url} />
-				)}
-				{!currentQuestion && <div style={{color: "white"}}>Питання вже все</div>}
+			<div className={styles.roundDescription} style={{marginTop: currentQuestion && children ? "-300px": "0"} }>
+				{currentRoundView()}
 			</div>
+			{currentQuestion && children && <>{children}</>}
 		</>
 	);
 }
